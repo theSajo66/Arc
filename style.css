@@ -1,4 +1,4 @@
-body {
+9body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #0f172a;
@@ -44,4 +44,11 @@ ul {
   padding: 1rem;
   background: #020617;
   border-radius: 10px;
+}
+#countdown {
+  text-align: center;
+  padding: 0.7rem;
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
+  font-weight: bold;
 }
