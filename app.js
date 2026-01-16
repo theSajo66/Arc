@@ -21,24 +21,37 @@ function isCurrentWeek(startDate) {
   return today >= start && today < end;
 }
 
+function getIcon(text) {
+  const t = text.toLowerCase();
+  if (t.includes("hornet") || t.includes("wasp")) return "🐝";
+  if (t.includes("queen") || t.includes("matriarch")) return "👑";
+  if (t.includes("rocketeer")) return "🚀";
+  if (t.includes("bastion")) return "🛡️";
+  if (t.includes("shredder")) return "⚙️";
+  if (t.includes("tick")) return "🐜";
+  if (t.includes("pop")) return "💥";
+  if (t.includes("leaper")) return "🦿";
+  if (t.includes("download") || t.includes("data")) return "💾";
+  if (t.includes("deliver")) return "📦";
+  return "🎯";
+}
+
 function renderWeeks(weeks) {
   const content = document.getElementById("content");
   content.innerHTML = "";
 
   weeks.forEach(week => {
     const current = isCurrentWeek(week.start);
-
     const div = document.createElement("div");
     div.className = "week" + (current ? " current" : "");
 
     const start = new Date(week.start).toLocaleDateString("de-DE");
-
     div.innerHTML = `<h3>Woche ab ${start}</h3>`;
 
     const ul = document.createElement("ul");
     week.trials.forEach(trial => {
       const li = document.createElement("li");
-      li.textContent = trial;
+      li.textContent = `${getIcon(trial)} ${trial}`;
       ul.appendChild(li);
     });
 
@@ -46,18 +59,6 @@ function renderWeeks(weeks) {
     content.appendChild(div);
   });
 }
-
-function renderDecks(decks) {
-  const list = document.getElementById("deckList");
-  list.innerHTML = "";
-
-  decks.forEach(deck => {
-    const li = document.createElement("li");
-    li.textContent = deck.name;
-    list.appendChild(li);
-  });
-}
-
 function checkNotification(weeks) {
   const currentWeek = weeks.find(w => isCurrentWeek(w.start));
   if (!currentWeek) return;
