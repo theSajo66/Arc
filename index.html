@@ -4,15 +4,14 @@
   <meta charset="UTF-8">
   <title>ARC Raiders – Trials</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Manifest für PWA -->
   <link rel="manifest" href="manifest.json">
+  <!-- Style -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-<section id="countdown">
-  ⏳ Nächster Reset in: <span id="resetTimer">lädt…</span>
-</section>
   <h1>ARC Raiders – Trials</h1>
   <div class="buttons">
     <button onclick="setView('calendar')">📆 Kalender</button>
@@ -20,13 +19,21 @@
   </div>
 </header>
 
+<!-- Reset Countdown -->
+<section id="countdown">
+  ⏳ Nächster Reset in: <span id="resetTimer">lädt…</span>
+</section>
+
+<!-- Main Content (Wochen) -->
 <main id="content"></main>
 
+<!-- Aktive Decks -->
 <section id="decks">
   <h2>🎴 Aktive Decks</h2>
   <ul id="deckList"></ul>
 </section>
 
+<!-- JS -->
 <script src="app.js"></script>
 </body>
 </html>
