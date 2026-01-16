@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>ARC Raiders – Trials</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>ARC Raiders – Trials</h1>
+  <div class="buttons">
+    <button onclick="setView('calendar')">📆 Kalender</button>
+    <button onclick="setView('list')">📋 Liste</button>
+  </div>
+</header>
+
+<main id="content"></main>
+
+<section id="decks">
+  <h2>🎴 Aktive Decks</h2>
+  <ul id="deckList"></ul>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>

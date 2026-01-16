@@ -1,0 +1,34 @@
+{
+  "trialWeeks": [
+    {
+      "start": "2026-01-12",
+      "trials": [
+        "Deliver Carriables",
+        "Damage Hornets",
+        "Destroy Pops",
+        "Download Data im Hidden Bunker"
+      ]
+    },
+    {
+      "start": "2026-01-19",
+      "trials": [
+        "Damage Queens",
+        "Open ARC Probes",
+        "Damage Shredders"
+      ]
+    },
+    {
+      "start": "2026-01-26",
+      "trials": [
+        "Destroy Ticks",
+        "Damage Wasps",
+        "Harvest Plants"
+      ]
+    }
+  ],
+  "decks": [
+    {
+      "name": "Goalie Deck"
+    }
+  ]
+}

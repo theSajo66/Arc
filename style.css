@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+header {
+  background: #020617;
+  padding: 1rem;
+  text-align: center;
+}
+
+.buttons button {
+  margin: 0.3rem;
+  padding: 0.5rem 1rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.week {
+  background: #020617;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.current {
+  border: 2px solid #22c55e;
+}
+
+.week h3 {
+  margin-top: 0;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+#decks {
+  margin: 1rem;
+  padding: 1rem;
+  background: #020617;
+  border-radius: 10px;
+}
