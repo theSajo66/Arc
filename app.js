@@ -1,19 +1,10 @@
+// ====================== Globale Variablen ======================
 let view = localStorage.getItem("view") || "calendar";
 const today = new Date();
 
-fetch("data.json")
-  .then(res => res.json())
-  .then(data => {
-    renderWeeks(data.trialWeeks);
-    renderDecks(data.decks);
-    checkNotification(data.trialWeeks);
-  });
+// ====================== Hilfsfunktionen ======================
 
-function setView(v) {
-  localStorage.setItem("view", v);
-  location.reload();
-}
-
+// Prüft, ob die Woche aktuell ist
 function isCurrentWeek(startDate) {
   const start = new Date(startDate);
   const end = new Date(start);
@@ -21,6 +12,7 @@ function isCurrentWeek(startDate) {
   return today >= start && today < end;
 }
 
+// Gibt ein Emoji passend zum Gegner / Trial zurück
 function getIcon(text) {
   const t = text.toLowerCase();
   if (t.includes("hornet") || t.includes("wasp")) return "🐝";
@@ -36,6 +28,44 @@ function getIcon(text) {
   return "🎯";
 }
 
+// Berechnet das Datum des nächsten Wochen-Resets (Montag)
+function getNextReset() {
+  const now = new Date();
+  const reset = new Date(now);
+  reset.setDate(now.getDate() + ((8 - now.getDay()) % 7 || 7));
+  reset.setHours(0, 0, 0, 0);
+  return reset;
+}
+
+// ====================== Countdown ======================
+function updateCountdown() {
+  const now = new Date();
+  const reset = getNextReset();
+  const diff = reset - now;
+
+  if (diff <= 0) {
+    document.getElementById("resetTimer").textContent = "jetzt";
+    return;
+  }
+
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((diff / (1000 * 60)) % 60);
+
+  document.getElementById("resetTimer").textContent =
+    `${d} Tage ${h} Std ${m} Min`;
+}
+
+setInterval(updateCountdown, 60000);
+updateCountdown();
+
+// ====================== Ansicht wechseln ======================
+function setView(v) {
+  localStorage.setItem("view", v);
+  location.reload();
+}
+
+// ====================== Trials rendern ======================
 function renderWeeks(weeks) {
   const content = document.getElementById("content");
   content.innerHTML = "";
@@ -59,6 +89,20 @@ function renderWeeks(weeks) {
     content.appendChild(div);
   });
 }
+
+// ====================== Decks rendern ======================
+function renderDecks(decks) {
+  const list = document.getElementById("deckList");
+  list.innerHTML = "";
+
+  decks.forEach(deck => {
+    const li = document.createElement("li");
+    li.textContent = deck.name;
+    list.appendChild(li);
+  });
+}
+
+// ====================== Benachrichtigung ======================
 function checkNotification(weeks) {
   const currentWeek = weeks.find(w => isCurrentWeek(w.start));
   if (!currentWeek) return;
@@ -76,34 +120,17 @@ function checkNotification(weeks) {
   }
 }
 
+// ====================== Daten laden ======================
+fetch("data.json")
+  .then(res => res.json())
+  .then(data => {
+    renderWeeks(data.trialWeeks);
+    renderDecks(data.decks);
+    checkNotification(data.trialWeeks);
+  })
+  .catch(err => console.error("Fehler beim Laden von data.json:", err));
+
+// ====================== Service Worker ======================
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js");
 }
-function getNextReset() {
-  const now = new Date();
-  const reset = new Date(now);
-  reset.setDate(now.getDate() + ((8 - now.getDay()) % 7 || 7));
-  reset.setHours(0, 0, 0, 0);
-  return reset;
-}
-
-function updateCountdown() {
-  const now = new Date();
-  const reset = getNextReset();
-  const diff = reset - now;
-
-  if (diff <= 0) {
-    document.getElementById("resetTimer").textContent = "jetzt";
-    return;
-  }
-
-  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const m = Math.floor((diff / (1000 * 60)) % 60);
-
-  document.getElementById("resetTimer").textContent =
-    `${d} Tage ${h} Std ${m} Min`;
-}
-
-setInterval(updateCountdown, 60000);
-updateCountdown();
