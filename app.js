@@ -78,3 +78,31 @@ function checkNotification(weeks) {
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js");
 }
+function getNextReset() {
+  const now = new Date();
+  const reset = new Date(now);
+  reset.setDate(now.getDate() + ((8 - now.getDay()) % 7 || 7));
+  reset.setHours(0, 0, 0, 0);
+  return reset;
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const reset = getNextReset();
+  const diff = reset - now;
+
+  if (diff <= 0) {
+    document.getElementById("resetTimer").textContent = "jetzt";
+    return;
+  }
+
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((diff / (1000 * 60)) % 60);
+
+  document.getElementById("resetTimer").textContent =
+    `${d} Tage ${h} Std ${m} Min`;
+}
+
+setInterval(updateCountdown, 60000);
+updateCountdown();
